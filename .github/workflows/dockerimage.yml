@@ -13,6 +13,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: df
+      run: |
+        df -h
+        docker system df
+        docker run nvidia/cuda:10.1-cudnn7-devel-centos7
+        df -h
+        docker system df
     - uses: actions/checkout@v2
     - name: Login to DockerHub Registry
       run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_LOGIN }} --password-stdin
