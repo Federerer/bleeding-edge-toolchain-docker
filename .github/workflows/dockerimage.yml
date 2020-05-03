@@ -18,11 +18,11 @@ jobs:
       run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_LOGIN }} --password-stdin
     - name: Get the version
       id: vars
-      run: echo ::set-output name=tag::$(echo ${GITHUB_REF | cut -d / -f 3})
+      run: echo ::set-output name=version::$(echo ${GITHUB_REF} | cut -d / -f 3)
     - name: Build the tagged Docker image
-      run: docker build . --file Dockerfile --tag federerer/bleeding-edge-toolchain:${{steps.vars.outputs.tag}}
+      run: docker build . --file Dockerfile --tag federerer/bleeding-edge-toolchain:${{steps.vars.outputs.version}}
     - name: Push the tagged Docker image
-      run: docker push federerer/bleeding-edge-toolchain:${{steps.vars.outputs.tag}}
+      run: docker push federerer/bleeding-edge-toolchain:${{steps.vars.outputs.version}}
     - name: Build the latest Docker image
       run: docker build . --file Dockerfile --tag federerer/bleeding-edge-toolchain:latest
     - name: Push the latest Docker image
